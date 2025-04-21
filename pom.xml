@@ -81,7 +81,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.infra.easyinfra/com.infra.easyinfra.HelloApplication</mainClass>
+                            <mainClass>com.infra.easyinfra/com.infra.easyinfra.EasyInfra</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
