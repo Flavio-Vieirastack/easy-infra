@@ -4,9 +4,11 @@ import com.infra.easyinfra.Constants.SceneConstants;
 import com.infra.easyinfra.Enum.TempKeys;
 import com.infra.easyinfra.Helpers.FileOperations;
 import com.infra.easyinfra.Helpers.Navigation;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
@@ -22,6 +24,8 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
     @FXML
     private Label clickableLabel;
+    @FXML
+    private Button button;
 
     @FXML
     private Text path;
@@ -29,11 +33,19 @@ public class MainController implements Initializable {
     @FXML
     private void handleNext(ActionEvent event) {
         if (path != null) {
-            Navigation.go(
-                    SceneConstants.SECOND_PAGE,
-                    event,
-                    getClass()
-            );
+            Platform.runLater(() -> button.setText("Await..."));
+            new Thread(() -> {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(() -> Navigation.go(
+                        SceneConstants.SECOND_PAGE,
+                        event,
+                        getClass()
+                ));
+            }).start();
         }
     }
 

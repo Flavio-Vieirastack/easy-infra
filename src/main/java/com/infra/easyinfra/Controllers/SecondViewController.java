@@ -45,32 +45,21 @@ public class SecondViewController implements Initializable {
 
     private List<AwsRegion> getAwsRegionsFromCLI() {
         List<AwsRegion> awsRegions = new ArrayList<>();
-
         try {
-            // Executando o comando AWS CLI
             ProcessBuilder processBuilder = new ProcessBuilder("aws", "ec2", "describe-regions", "--query", "Regions[*].RegionName", "--output", "text");
             Process process = processBuilder.start();
-
-            // Lendo a saída do processo
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
-                // A linha retornada contém todas as regiões separadas por espaço
-                String[] regions = line.split("\\s+");  // Divide as regiões com base em espaços em branco
-
-                // Para cada região, cria um objeto AwsRegion e adiciona à lista
+                String[] regions = line.split("\\s+");
                 for (String region : regions) {
                     awsRegions.add(new AwsRegion(region));
                 }
             }
-
-            // Espera o processo terminar
             process.waitFor();
-
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-
         return awsRegions;
     }
 

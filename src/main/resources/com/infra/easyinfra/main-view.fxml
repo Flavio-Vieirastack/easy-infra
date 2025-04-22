@@ -26,5 +26,5 @@
    </Text>
    <Button mnemonicParsing="false" onAction="#getProjectRootFolder" text="Add your project root folder" />
    <Text fx:id="path" strokeType="OUTSIDE" strokeWidth="0.0" />
-   <Button mnemonicParsing="false" onAction="#handleNext" text="Next" />
+   <Button mnemonicParsing="false" onAction="#handleNext" text="Next" fx:id="button"/>
 </VBox>
