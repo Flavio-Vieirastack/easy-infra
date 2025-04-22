@@ -1,4 +1,4 @@
 package com.infra.easyinfra.Controllers;
 
-public class ThirdView {
+public class ThirdViewController {
 }

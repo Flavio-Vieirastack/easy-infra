@@ -11,7 +11,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.util.StringConverter;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class SecondViewController implements Initializable {
@@ -20,42 +25,12 @@ public class SecondViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        comboBox.getItems().addAll(
-                new AwsRegion("US East (N. Virginia)", "us-east-1"),
-                new AwsRegion("US East (Ohio)", "us-east-2"),
-                new AwsRegion("US West (N. California)", "us-west-1"),
-                new AwsRegion("US West (Oregon)", "us-west-2"),
-                new AwsRegion("Africa (Cape Town)", "af-south-1"),
-                new AwsRegion("Asia Pacific (Hong Kong)", "ap-east-1"),
-                new AwsRegion("Asia Pacific (Hyderabad)", "ap-south-2"),
-                new AwsRegion("Asia Pacific (Jakarta)", "ap-southeast-3"),
-                new AwsRegion("Asia Pacific (Melbourne)", "ap-southeast-4"),
-                new AwsRegion("Asia Pacific (Mumbai)", "ap-south-1"),
-                new AwsRegion("Asia Pacific (Osaka)", "ap-northeast-3"),
-                new AwsRegion("Asia Pacific (Seoul)", "ap-northeast-2"),
-                new AwsRegion("Asia Pacific (Singapore)", "ap-southeast-1"),
-                new AwsRegion("Asia Pacific (Sydney)", "ap-southeast-2"),
-                new AwsRegion("Asia Pacific (Tokyo)", "ap-northeast-1"),
-                new AwsRegion("Canada (Central)", "ca-central-1"),
-                new AwsRegion("Europe (Frankfurt)", "eu-central-1"),
-                new AwsRegion("Europe (Ireland)", "eu-west-1"),
-                new AwsRegion("Europe (London)", "eu-west-2"),
-                new AwsRegion("Europe (Milan)", "eu-south-1"),
-                new AwsRegion("Europe (Paris)", "eu-west-3"),
-                new AwsRegion("Europe (Spain)", "eu-south-2"),
-                new AwsRegion("Europe (Stockholm)", "eu-north-1"),
-                new AwsRegion("Europe (Zurich)", "eu-central-2"),
-                new AwsRegion("Middle East (Bahrain)", "me-south-1"),
-                new AwsRegion("Middle East (UAE)", "me-central-1"),
-                new AwsRegion("South America (São Paulo)", "sa-east-1"),
-                new AwsRegion("AWS GovCloud (US-East)", "us-gov-east-1"),
-                new AwsRegion("AWS GovCloud (US-West)", "us-gov-west-1"),
-                new AwsRegion("Israel (Tel Aviv)", "il-central-1")
-        );
+        List<AwsRegion> regions = getAwsRegionsFromCLI();
+        comboBox.getItems().addAll(regions);
         comboBox.setConverter(new StringConverter<>() {
             @Override
             public String toString(AwsRegion region) {
-                return region != null ? region.name() + " - " + region.code() : "";
+                return region != null ? region.name() : "";
             }
             @Override
             public AwsRegion fromString(String string) {
@@ -64,9 +39,41 @@ public class SecondViewController implements Initializable {
         });
         comboBox.setOnAction(e -> {
             AwsRegion selected = comboBox.getValue();
-            FileOperations.createOrOverwriteFile(TempKeys.AWS_REGION.getKey(), selected.code());
+            FileOperations.createOrOverwriteFile(TempKeys.AWS_REGION.getKey(), selected.name());
         });
     }
+
+    private List<AwsRegion> getAwsRegionsFromCLI() {
+        List<AwsRegion> awsRegions = new ArrayList<>();
+
+        try {
+            // Executando o comando AWS CLI
+            ProcessBuilder processBuilder = new ProcessBuilder("aws", "ec2", "describe-regions", "--query", "Regions[*].RegionName", "--output", "text");
+            Process process = processBuilder.start();
+
+            // Lendo a saída do processo
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // A linha retornada contém todas as regiões separadas por espaço
+                String[] regions = line.split("\\s+");  // Divide as regiões com base em espaços em branco
+
+                // Para cada região, cria um objeto AwsRegion e adiciona à lista
+                for (String region : regions) {
+                    awsRegions.add(new AwsRegion(region));
+                }
+            }
+
+            // Espera o processo terminar
+            process.waitFor();
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return awsRegions;
+    }
+
 
     @FXML
     public void next(ActionEvent event) {
