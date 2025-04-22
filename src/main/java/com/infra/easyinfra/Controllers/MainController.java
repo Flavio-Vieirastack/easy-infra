@@ -1,28 +1,40 @@
 package com.infra.easyinfra.Controllers;
 
 import com.infra.easyinfra.Constants.SceneConstants;
-import com.infra.easyinfra.Constants.TempConstants;
+import com.infra.easyinfra.Enum.TempKeys;
 import com.infra.easyinfra.Helpers.FileOperations;
 import com.infra.easyinfra.Helpers.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class MainController {
+public class MainController implements Initializable {
+    @FXML
+    private Label clickableLabel;
+
     @FXML
     private Text path;
 
     @FXML
     private void handleNext(ActionEvent event) {
-        Navigation.go(
-                SceneConstants.SECOND_PAGE,
-                event,
-                getClass()
-        );
+        if (path != null) {
+            Navigation.go(
+                    SceneConstants.SECOND_PAGE,
+                    event,
+                    getClass()
+            );
+        }
     }
 
     @FXML
@@ -37,8 +49,22 @@ public class MainController {
         if (selectedDirectory != null) {
             String folderPath = selectedDirectory.getAbsolutePath();
             path.setText("Path: " + folderPath);
-            FileOperations.createOrOverwriteFile(TempConstants.PROJECT_ROOT_FOLDER, folderPath);
+            FileOperations.createOrOverwriteFile(TempKeys.PROJECT_ROOT_FOLDER.getKey(), folderPath);
         }
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        clickableLabel.setOnMouseClicked(event -> {
+            try {
+                String docUrl = "https://github.com/Flavio-Vieirastack/easy-infra";
+                if (Desktop.isDesktopSupported()) {
+                    Desktop desktop = Desktop.getDesktop();
+                    desktop.browse(new URI(docUrl));
+                }
+            } catch (URISyntaxException | java.io.IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 }

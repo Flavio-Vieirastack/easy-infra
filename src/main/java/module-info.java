@@ -4,6 +4,8 @@ module com.infra.easyinfra {
 
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
+    requires static lombok;
+    requires java.desktop;
 
     opens com.infra.easyinfra to javafx.fxml;
     exports com.infra.easyinfra;

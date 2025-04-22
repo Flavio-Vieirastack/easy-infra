@@ -13,6 +13,7 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
+   <Label fx:id="clickableLabel" text="Before start read our docs" textFill="#1855b2" />
    <ImageView fitHeight="165.0" fitWidth="661.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../../images/ChatGPT_Image_Apr_20__2025__06_00_51_PM-removebg-preview.png" />
@@ -24,8 +25,6 @@
       </font>
    </Text>
    <Button mnemonicParsing="false" onAction="#getProjectRootFolder" text="Add your project root folder" />
-   <Text strokeType="OUTSIDE" strokeWidth="0.0" fx:id="path" />
+   <Text fx:id="path" strokeType="OUTSIDE" strokeWidth="0.0" />
    <Button mnemonicParsing="false" onAction="#handleNext" text="Next" />
-
-    <Label fx:id="welcomeText" />
 </VBox>
