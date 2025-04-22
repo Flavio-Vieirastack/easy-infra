@@ -16,6 +16,6 @@
          </font>
       </Text>
       <TextField layoutX="46.0" layoutY="236.0" prefHeight="26.0" prefWidth="515.0" fx:id="textField"/>
-      <Button layoutX="273.0" layoutY="323.0" mnemonicParsing="false" text="Next" />
+      <Button layoutX="273.0" layoutY="323.0" mnemonicParsing="false" text="Next" onAction="#handleCaptureText"/>
    </children>
 </AnchorPane>

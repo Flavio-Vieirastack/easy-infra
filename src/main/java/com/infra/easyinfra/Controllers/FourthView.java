@@ -1,8 +1,10 @@
 package com.infra.easyinfra.Controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.infra.easyinfra.Constants.SceneConstants;
 import com.infra.easyinfra.Enum.TempKeys;
 import com.infra.easyinfra.Helpers.FileOperations;
+import com.infra.easyinfra.Helpers.Navigation;
 import com.infra.easyinfra.Helpers.StringUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,13 +20,19 @@ public class FourthView {
     public void handleCaptureText(ActionEvent event) {
         var mapper = new ObjectMapper();
         String inputText = textField.getText();
-        if(!inputText.isBlank()) {
+        if (!inputText.isBlank()) {
             FileOperations.createOrOverwriteFile(
                     TempKeys.S3_BUCKETS.getKey(),
                     mapper.writeValueAsString(
                             StringUtils.splitByComma(inputText)
                     )
-            );// add navegação
+            );
         }
+        Navigation
+                .go(
+                        SceneConstants.FIFTH_PAGE,
+                        event,
+                        getClass()
+                );
     }
 }
