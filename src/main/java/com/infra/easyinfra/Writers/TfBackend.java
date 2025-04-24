@@ -8,7 +8,7 @@ public class TfBackend implements InfraWriter {
     @Override
     public void write(InfraData infraData) {
         FileOperations.createOrOverwriteFile(
-                infraData.getProjectRootFolder(),
+                infraData.getInfraFolder(),
                 "backend.tf",
                 String.format(
                         """

@@ -21,7 +21,7 @@ public class TfS3 implements InfraWriter {
             }
             FileOperations
                     .createOrOverwriteFile(
-                            infraData.getProjectRootFolder(),
+                            infraData.getInfraFolder(),
                             "s3.tf",
                             buckets.toString()
                     );

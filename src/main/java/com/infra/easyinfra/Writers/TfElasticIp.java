@@ -9,7 +9,7 @@ public class TfElasticIp implements InfraWriter {
     public void write(InfraData infraData) {
         FileOperations
                 .createOrOverwriteFile(
-                        infraData.getProjectRootFolder(),
+                        infraData.getInfraFolder(),
                         "elastic_ip.tf",
                         """
                                 resource "aws_eip" "api_eip" {

@@ -9,7 +9,7 @@ public class DockerCompose implements InfraWriter {
     public void write(InfraData infraData) {
         FileOperations
                 .createOrOverwriteFile(
-                        infraData.getProjectRootFolder().replace("/infra", ""),
+                        infraData.getProjectRootFolder(),
                         "docker-compose.yml",
                         String.format(
                                 """

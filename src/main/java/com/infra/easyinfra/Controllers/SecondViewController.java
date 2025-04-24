@@ -2,8 +2,7 @@ package com.infra.easyinfra.Controllers;
 
 import com.infra.easyinfra.Constants.SceneConstants;
 import com.infra.easyinfra.Dtos.AwsRegion;
-import com.infra.easyinfra.Enum.TempKeys;
-import com.infra.easyinfra.Helpers.FileOperations;
+import com.infra.easyinfra.Entity.InfraData;
 import com.infra.easyinfra.Helpers.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,7 +38,7 @@ public class SecondViewController implements Initializable {
         });
         comboBox.setOnAction(e -> {
             AwsRegion selected = comboBox.getValue();
-            FileOperations.createOrOverwriteFile(TempKeys.AWS_REGION.getKey(), selected.name());
+            InfraData.getInstance().setAwsRegion(selected.name());
         });
     }
 

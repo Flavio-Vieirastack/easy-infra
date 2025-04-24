@@ -8,7 +8,7 @@ public class DockerFile implements InfraWriter {
     @Override
     public void write(InfraData infraData) {
         FileOperations.createOrOverwriteFile(
-                infraData.getProjectRootFolder().replace("/infra", ""),
+                infraData.getProjectRootFolder(),
                 "Dockerfile",
                 String.format(
                         """

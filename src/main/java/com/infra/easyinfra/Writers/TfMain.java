@@ -9,7 +9,7 @@ public class TfMain implements InfraWriter {
     public void write(InfraData infraData) {
         FileOperations
                 .createOrOverwriteFile(
-                        infraData.getProjectRootFolder(),
+                        infraData.getInfraFolder(),
                         "main.tf",
                         String.format(
                                 """
@@ -122,7 +122,7 @@ public class TfMain implements InfraWriter {
                                           container_definitions = jsonencode([
                                             {
                                               name      = "%s"
-                                              image = "${aws_ecr_repository.client_app.repository_url}:latest"  # Aqui vem o repositório do ECR
+                                              image = "${aws_ecr_repository.client_app.repository_url}:latest"
                                               essential = true
                                               portMappings = [
                                                 {
@@ -167,8 +167,8 @@ public class TfMain implements InfraWriter {
                                         }
                                         
                                         resource "aws_instance" "ecs_instance" {
-                                          ami = data.aws_ssm_parameter.ecs_ami.value  # AMI do EC2, use uma AMI que seja compatível com o Free Tier
-                                          instance_type = "t2.micro"                  # Tipo de instância compatível com o Free Tier
+                                          ami = data.aws_ssm_parameter.ecs_ami.value
+                                          instance_type = "t2.micro"
                                         
                                           iam_instance_profile        = aws_iam_instance_profile.ecs_instance_profile.name
                                           subnet_id                   = aws_subnet.public_subnet.id
@@ -295,7 +295,7 @@ public class TfMain implements InfraWriter {
                                 infraData.getEcsClusterName(),
                                 infraData.getEcsClusterName(),
                                 infraData.getSubDomainUrl(),
-                                infraData.getEcsTaskuserEmail(),
+                                infraData.getUserEmail(),
                                 infraData.getSubDomainUrl(),
                                 infraData.getSubDomainUrl(),
                                 infraData.getSubDomainUrl(),

@@ -1,8 +1,7 @@
 package com.infra.easyinfra.Controllers;
 
 import com.infra.easyinfra.Constants.SceneConstants;
-import com.infra.easyinfra.Enum.TempKeys;
-import com.infra.easyinfra.Helpers.FileOperations;
+import com.infra.easyinfra.Entity.InfraData;
 import com.infra.easyinfra.Helpers.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,10 +22,7 @@ public class ThirdViewController {
         if (inputText.contains("-") || !inputText.contains("_")) {
             errorText.setText("Invalid db name. The database name must contains underscore '_'");
         } else {
-            FileOperations.createOrOverwriteFile(
-                    TempKeys.DB_NAME.getKey(),
-                    inputText
-            );
+            InfraData.getInstance().setDbName(inputText);
             Navigation
                     .go(
                             SceneConstants.FOURTH_PAGE,

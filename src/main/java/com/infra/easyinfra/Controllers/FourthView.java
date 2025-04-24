@@ -2,7 +2,7 @@ package com.infra.easyinfra.Controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infra.easyinfra.Constants.SceneConstants;
-import com.infra.easyinfra.Enum.TempKeys;
+import com.infra.easyinfra.Entity.InfraData;
 import com.infra.easyinfra.Helpers.FileOperations;
 import com.infra.easyinfra.Helpers.Navigation;
 import com.infra.easyinfra.Helpers.StringUtils;
@@ -18,15 +18,10 @@ public class FourthView {
     @FXML
     @SneakyThrows
     public void handleCaptureText(ActionEvent event) {
-        var mapper = new ObjectMapper();
         String inputText = textField.getText();
         if (!inputText.isBlank()) {
-            FileOperations.createOrOverwriteFile(
-                    TempKeys.S3_BUCKETS.getKey(),
-                    mapper.writeValueAsString(
-                            StringUtils.splitByComma(inputText)
-                    )
-            );
+            var infraData = InfraData.getInstance();
+            infraData.setS3Buckets(StringUtils.splitByComma(inputText));
         }
         Navigation
                 .go(

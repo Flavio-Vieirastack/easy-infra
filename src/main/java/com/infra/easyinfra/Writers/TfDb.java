@@ -9,7 +9,7 @@ public class TfDb implements InfraWriter {
     public void write(InfraData infraData) {
         FileOperations
                 .createOrOverwriteFile(
-                        infraData.getProjectRootFolder(),
+                        infraData.getInfraFolder(),
                         "db.tf",
                         String.format(
                                 """
@@ -42,7 +42,7 @@ public class TfDb implements InfraWriter {
                                         resource "aws_security_group" "db_sg" {
                                           name        = "postgresql-sg"
                                           description = "Allow PostgreSQL inbound traffic from ECS"
-                                          vpc_id      = aws_vpc.main.id  # <- Corrigido
+                                          vpc_id      = aws_vpc.main.id
                                         
                                           ingress {
                                             from_port       = 5432

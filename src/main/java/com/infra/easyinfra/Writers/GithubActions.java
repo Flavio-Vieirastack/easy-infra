@@ -9,7 +9,7 @@ public class GithubActions implements InfraWriter {
     public void write(InfraData infraData) {
         FileOperations
                 .createOrOverwriteFile(
-                        infraData.getProjectRootFolder().replace("/infra", "/.github/workflows"),
+                        infraData.getProjectRootFolder() + "/.github/workflows",
                         "deploy.yml",
                         String.format(
                                 """

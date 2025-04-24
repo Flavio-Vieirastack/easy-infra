@@ -1,8 +1,7 @@
 package com.infra.easyinfra.Controllers;
 
 import com.infra.easyinfra.Constants.SceneConstants;
-import com.infra.easyinfra.Enum.TempKeys;
-import com.infra.easyinfra.Helpers.FileOperations;
+import com.infra.easyinfra.Entity.InfraData;
 import com.infra.easyinfra.Helpers.Navigation;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -62,7 +61,7 @@ public class MainController implements Initializable {
         if (selectedDirectory != null) {
             String folderPath = selectedDirectory.getAbsolutePath();
             path.setText("Path: " + folderPath);
-            FileOperations.createOrOverwriteFile(TempKeys.PROJECT_ROOT_FOLDER.getKey(), folderPath);
+            InfraData.getInstance().setProjectRootFolder(folderPath);
         }
     }
 

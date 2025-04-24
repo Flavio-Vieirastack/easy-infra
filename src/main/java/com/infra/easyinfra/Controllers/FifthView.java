@@ -1,8 +1,7 @@
 package com.infra.easyinfra.Controllers;
 
 import com.infra.easyinfra.Constants.SceneConstants;
-import com.infra.easyinfra.Enum.TempKeys;
-import com.infra.easyinfra.Helpers.FileOperations;
+import com.infra.easyinfra.Entity.InfraData;
 import com.infra.easyinfra.Helpers.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,13 +33,14 @@ public class FifthView {
                 && subDomainUrl.getText() != null
                 && userEmail.getText() != null
         ) {
-            FileOperations.createOrOverwriteFile(TempKeys.ECS_TASK.getKey(), ecsTask.getText());
-            FileOperations.createOrOverwriteFile(TempKeys.CONTAINER_NAME.getKey(), containerName.getText());
-            FileOperations.createOrOverwriteFile(TempKeys.ECS_SERVICE_NAME.getKey(), ecsServiceName.getText());
-            FileOperations.createOrOverwriteFile(TempKeys.ECS_CLUSTER_NAME.getKey(), ecsClusterName.getText());
-            FileOperations.createOrOverwriteFile(TempKeys.APPLICATION_PORT.getKey(), applicationPort.getText());
-            FileOperations.createOrOverwriteFile(TempKeys.SUBDOMAIN_URL.getKey(), subDomainUrl.getText());
-            FileOperations.createOrOverwriteFile(TempKeys.USER_EMAIL.getKey(), userEmail.getText());
+            var infraData = InfraData.getInstance();
+            infraData.setEcsTask(ecsTask.getText());
+            infraData.setContainerName(containerName.getText());
+            infraData.setEcsServiceName(ecsServiceName.getText());
+            infraData.setEcsClusterName(ecsClusterName.getText());
+            infraData.setApplicationPort(applicationPort.getText());
+            infraData.setSubDomainUrl(subDomainUrl.getText());
+            infraData.setUserEmail(userEmail.getText());
             Navigation
                     .go(
                             SceneConstants.SIXTH_PAGE,
