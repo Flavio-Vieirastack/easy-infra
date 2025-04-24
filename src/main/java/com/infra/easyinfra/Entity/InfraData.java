@@ -9,13 +9,37 @@ import lombok.SneakyThrows;
 import java.util.List;
 
 public class InfraData {
-    private String projectRootFolder;
-    private String awsRegion;
-    private List<String> s3Buckets;
-    private String dbName;
+
+    public String getEcsTask() {
+        return FileOperations.readFile(TempKeys.ECS_TASK.getKey());
+    }
+
+    public String getEcsTaskuserEmail() {
+        return FileOperations.readFile(TempKeys.USER_EMAIL.getKey());
+    }
+
+    public String getSubDomainUrl() {
+        return FileOperations.readFile(TempKeys.SUBDOMAIN_URL.getKey());
+    }
+
+    public String getApplicationPort() {
+        return FileOperations.readFile(TempKeys.APPLICATION_PORT.getKey());
+    }
+
+    public String getEcsClusterName() {
+        return FileOperations.readFile(TempKeys.ECS_CLUSTER_NAME.getKey());
+    }
+
+    public String getContainerName() {
+        return FileOperations.readFile(TempKeys.CONTAINER_NAME.getKey());
+    }
+
+    public String getEcsServiceName() {
+        return FileOperations.readFile(TempKeys.ECS_SERVICE_NAME.getKey());
+    }
 
     public String getProjectRootFolder() {
-        return FileOperations.readFile(TempKeys.PROJECT_ROOT_FOLDER.getKey());
+        return FileOperations.readFile(TempKeys.PROJECT_ROOT_FOLDER.getKey()) + "/infra";
     }
 
     public String getAwsRegion() {

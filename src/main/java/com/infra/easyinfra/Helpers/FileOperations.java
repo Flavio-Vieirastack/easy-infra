@@ -21,6 +21,21 @@ public abstract class FileOperations {
         }
     }
 
+    public static void createOrOverwriteFile(String directoryPath, String fileName, String content) {
+        Path directory = Paths.get(directoryPath);
+        Path filePath = directory.resolve(fileName);
+        try {
+            if (!Files.exists(directory)) {
+                Files.createDirectories(directory);
+                System.out.println("Diretório criado: " + directory.toAbsolutePath());
+            }
+            Files.writeString(filePath, content);
+            System.out.println("Arquivo criado ou sobrescrito: " + filePath.toAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Erro ao criar ou sobrescrever o arquivo: " + e.getMessage());
+        }
+    }
+
     public static String readFile(String fileName) {
         Path path = Paths.get(fileName);
         try {
