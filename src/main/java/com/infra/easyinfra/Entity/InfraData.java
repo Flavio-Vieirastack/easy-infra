@@ -56,4 +56,17 @@ public class InfraData {
     public String getDbName() {
         return FileOperations.readFile(TempKeys.DB_NAME.getKey());
     }
+
+    public boolean isAllNull() {
+        return getEcsTask() == null &&
+               getEcsTaskuserEmail() == null &&
+               getSubDomainUrl() == null &&
+               getApplicationPort() == null &&
+               getEcsClusterName() == null &&
+               getContainerName() == null &&
+               getEcsServiceName() == null &&
+               getProjectRootFolder() == null &&
+               getAwsRegion() == null &&
+               getDbName() == null;
+    }
 }

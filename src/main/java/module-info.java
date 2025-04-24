@@ -6,6 +6,7 @@ module com.infra.easyinfra {
     requires net.synedra.validatorfx;
     requires static lombok;
     requires com.fasterxml.jackson.databind;
+    requires java.desktop;
 
     opens com.infra.easyinfra to javafx.fxml;
     exports com.infra.easyinfra;

@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
     @FXML
     private Label clickableLabel;
+
     @FXML
     private Button button;
 
